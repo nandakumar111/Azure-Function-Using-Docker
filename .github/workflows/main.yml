@@ -23,15 +23,15 @@ jobs:
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
         - run: |
-            docker build . -t ${{ secrets.ACR_URL }}/sampleapp:${{ github.sha }}
-            docker push ${{ secrets.ACR_URL }}/sampleapp:${{ github.sha }}
+            docker build . -t ${{ secrets.ACR_URL }}/sampleapp:b6dfd07cb04fa871024685ba08cc4c45fd24d275
+            docker push ${{ secrets.ACR_URL }}/sampleapp:b6dfd07cb04fa871024685ba08cc4c45fd24d275
 
         - name: 'Deploy to Azure Container Instances'
           uses: 'azure/aci-deploy@v1'
           with:
             resource-group: ${{ secrets.ACR_RESOURCE_GROUP }}
             dns-name-label: ${{ secrets.ACR_RESOURCE_GROUP }}${{ github.run_number }}
-            image: ${{ secrets.ACR_URL }}/sampleapp:${{ github.sha }}
+            image: ${{ secrets.ACR_URL }}/sampleapp:b6dfd07cb04fa871024685ba08cc4c45fd24d275
             registry-login-server: ${{ secrets.ACR_URL }}
             registry-username: ${{ secrets.ACR_USERNAME }}
             registry-password: ${{ secrets.ACR_PASSWORD }}
